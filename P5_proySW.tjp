@@ -80,7 +80,7 @@ resource dev3 "Peter Green" {
 resource dev4 "Berta Castillo" {
   email "897199@unizar.es"
   # 4 hours per day
-  workinghours weekday 09:00 - 13:00
+  workinghours mon - sun 09:00 - 13:00
 }
 
 # TODO: add another resource
