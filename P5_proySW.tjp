@@ -77,6 +77,12 @@ resource dev3 "Peter Green" {
   email "kkk@unizar.es"
 }
 
+resource dev4 "Berta Castillo" {
+  email "897199@unizar.es"
+  # 4 hours per day
+  workinghours weekday 09:00 - 13:00
+}
+
 # TODO: add another resource
 
 # Now we specify the work packages. The whole project is described as
@@ -165,22 +171,23 @@ task WMGame "Web & Mobile Game" {
     # Cuenta a la que se van a cargar los costes.
     purge chargeset
     chargeset mFront
-    responsible dev3
+    responsible dev4
     depends WMGame.tback.tBEd
     task tGUIdMob "Mobile GUI Design" {
       effort 9d
       actual:effort 15d
-      allocate dev3
+      allocate dev4
       # TODO: modificar con la nueva anotación.
-      journalentry 2026-01-15 "Problems with the GUI design tool" {
-        author dev3
-        alert yellow
-        summary "The tool used for the GUI design has given me a lot of problems. I recommend to look for other one."
+      journalentry 2026-04-16 "Mobile GUI Design finished on time" {
+        author dev4
+        alert green
+        summary "The team has finished the mobile GUI Design on time, according to the 
+        date scheduled. This allows focusing on the next steps from now on."
       }
     }
     task tFEcMob "Mobile Front End Construction" {
       effort 15d
-      allocate dev2, dev3
+      allocate dev2, dev4
       depends WMGame.tmobF.tGUIdMob
     }
     task tFEtMob "Mobile Front End Test" {
@@ -201,13 +208,13 @@ task WMGame "Web & Mobile Game" {
     # project.
     task tDepEval "Deployment evaluation and decision"{
       effort 1d
-      allocate boss, dev1, dev2, dev3
+      allocate boss, dev1, dev2, dev3, dev 4
     }
 
     # Subtask to deploy the projecto in the Cloud solution decided in the previous task.
     task tDepEx "Deployment execution" {
       effort 2d
-      allocate dev1, dev2
+      allocate dev1, dev2, dev4
       # The backend has to be developed before being deployed.
       depends WMGame.tback
       depends WMGame.deploy.tDepEval
@@ -215,20 +222,21 @@ task WMGame "Web & Mobile Game" {
   }
 
   task ttest "Acceptance tests" {
-      effort 10d
-      allocate boss
-      allocate dev2
-      # Dato real obtenido de un momento de control del proyecto.
-      actual:effort 20d
-      # Como MODIFICACIÓN de la planificación inicial, el inicio de las pruebas de aceptación 
-      # debe ser, como pronto, el 15 de mayo de 2026.
-      minstart 2026-05-15
-      # Frontend and Backend must be finished before starting the acceptance tests.
-      depends WMGame.twebF
-      depends WMGame.tback
-      depends WMGame.tmobF
-      depends WMGame.deploy
-      }
+    effort 10d
+    allocate boss
+    allocate dev2
+    # Dato real obtenido de un momento de control del proyecto.
+    actual:effort 20d
+    # Como MODIFICACIÓN de la planificación inicial, el inicio de las pruebas de aceptación 
+    # debe ser, como pronto, el 15 de mayo de 2026.
+    minstart 2026-05-15
+    # Frontend, Backend and Deployment must be finished before starting the acceptance tests
+    # (version to submit).
+    depends WMGame.twebF
+    depends WMGame.tback
+    depends WMGame.tmobF
+    depends WMGame.deploy
+  }
 
   
   # Milestones are important events, declared as tasks with no duration.
