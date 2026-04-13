@@ -436,4 +436,18 @@ resourcereport resourceGraph "" {
   sorttasks plan.start.up
 }
 
-# TODO: add a report showing the initial plan of the project.
+# A traditional Gantt chart with the initial plan of the project.
+taskreport overview "" {
+  scenarios plan
+  headline "Initial Project Plan"
+  columns bsi { title 'WBS' },
+          name, start, end, effort, cost,
+          revenue, chart { ${TaskTip} }
+  # For this report we like to have the abbreviated weekday in front
+  # of the date. %a is the tag for this.
+  timeformat "%a %Y-%m-%d"
+  loadunit days
+  hideresource @all
+  balance cost rev
+  caption 'All effort values are in man days.'
+}
