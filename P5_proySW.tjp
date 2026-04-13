@@ -5,7 +5,7 @@
  * some elements of it
  */
 
-# TODO: change the start date to 2026-04-16
+# Here the start date (2025-12-15) and the duration (5 months) of the project are specified.
 project pSix "Web Game"  2025-12-15 +5m {
   # Set the default time zone for the project. If not specified, UTC
   # is used.
@@ -23,7 +23,7 @@ project pSix "Web Game"  2025-12-15 +5m {
 
   # Date in which the reports are generated (all calculations will be made based on this date).
   # It's used to see the progress until that date.
-  now 2026-02-25-13:00
+  now 2026-04-16
   # The currency for all money values is the US Dollar.
   currency "EUR"
 
@@ -159,15 +159,74 @@ task WMGame "Web & Mobile Game" {
     }    
   }
 
+  # New task for the mobile front end development.
+  task tmobF "Mobile Front End" {
+    # Cuenta a la que se van a cargar los costes.
+    purge chargeset
+    chargeset mFront
+    responsible dev3
+    depends WMGame.tback.tBEd
+    task tGUIdMob "Mobile GUI Design" {
+      effort 9d
+      actual:effort 15d
+      allocate dev3
+      # TODO: modificar con la nueva anotación.
+      journalentry 2026-01-15 "Problems with the GUI design tool" {
+        author dev3
+        alert yellow
+        summary "The tool used for the GUI design has given me a lot of problems. I recommend to look for other one."
+      }
+    }
+    task tFEcMob "Mobile Front End Construction" {
+      effort 15d
+      allocate dev2, dev3
+      depends WMGame.tmobF.tGUIdMob
+    }
+    task tFEtMob "Mobile Front End Test" {
+      effort 6d
+      allocate dev1
+      depends WMGame.tmobF.tFEcMob
+    }    
+  }
+
+  # New task for the backend deployment.
+  task deploy "Deployment" {
+
+    purge chargeset
+    chargeset dep
+    responsible boss
+
+    # Subtask to evaluate and decide which Cloud solution we want to use for the deployment of the
+    # project.
+    task tDepEval "Deployment evaluation and decision"{
+      effort 1d
+      allocate boss, dev1, dev2, dev3
+    }
+
+    # Subtask to deploy the projecto in the Cloud solution decided in the previous task.
+    task tDepEx "Deployment execution" {
+      effort 2d
+      allocate dev1, dev2
+      # The backend has to be developed before being deployed.
+      depends WMGame.tback
+      depends WMGame.deploy.tDepEval
+    }
+  }
+
   task ttest "Acceptance tests" {
       effort 10d
       allocate boss
       allocate dev2
       # Dato real obtenido de un momento de control del proyecto.
       actual:effort 20d
+      # Como MODIFICACIÓN de la planificación inicial, el inicio de las pruebas de aceptación 
+      # debe ser, como pronto, el 15 de mayo de 2026.
+      minstart 2026-05-15
       # Frontend and Backend must be finished before starting the acceptance tests.
       depends WMGame.twebF
       depends WMGame.tback
+      depends WMGame.tmobF
+      depends WMGame.deploy
       }
 
   
@@ -367,3 +426,5 @@ resourcereport resourceGraph "" {
   hidetask ~(isleaf() & isleaf_())
   sorttasks plan.start.up
 }
+
+# TODO: add a report showing the initial plan of the project.
