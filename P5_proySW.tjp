@@ -437,7 +437,7 @@ resourcereport resourceGraph "" {
 }
 
 # A traditional Gantt chart with the initial plan of the project.
-taskreport overview "" {
+taskreport initialPlan "" {
   scenarios plan
   headline "Initial Project Plan"
   columns bsi { title 'WBS' },
