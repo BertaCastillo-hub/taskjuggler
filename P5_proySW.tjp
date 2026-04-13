@@ -208,7 +208,7 @@ task WMGame "Web & Mobile Game" {
     # project.
     task tDepEval "Deployment evaluation and decision"{
       effort 1d
-      allocate boss, dev1, dev2, dev3, dev 4
+      allocate boss, dev1, dev2, dev3, dev4
     }
 
     # Subtask to deploy the projecto in the Cloud solution decided in the previous task.
