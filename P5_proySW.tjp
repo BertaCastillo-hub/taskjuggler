@@ -81,9 +81,8 @@ resource dev4 "Berta Castillo" {
   email "897199@unizar.es"
   # 4 hours per day
   workinghours mon - sun 09:00 - 13:00
+  limits {dailymax 4h}
 }
-
-# TODO: add another resource
 
 # Now we specify the work packages. The whole project is described as
 # a task that contains subtasks. These subtasks are then broken down
@@ -139,7 +138,7 @@ task WMGame "Web & Mobile Game" {
   }
 
   task twebF "Web Front End" {
-    # Cuenta a la que se van a cargar los costes.
+    # Account to which the costs are going to be charged.
     purge chargeset
     chargeset wFront
     responsible dev3
@@ -168,7 +167,7 @@ task WMGame "Web & Mobile Game" {
 
   # New task for the mobile front end development.
   task tmobF "Mobile Front End" {
-    # Cuenta a la que se van a cargar los costes.
+    # Account to which the costs are going to be charged.
     purge chargeset
     chargeset mFront
     responsible dev4
@@ -177,7 +176,6 @@ task WMGame "Web & Mobile Game" {
       effort 9d
       actual:effort 15d
       allocate dev4
-      # TODO: modificar con la nueva anotación.
       journalentry 2026-04-16 "Mobile GUI Design finished on time" {
         author dev4
         alert green
@@ -227,8 +225,8 @@ task WMGame "Web & Mobile Game" {
     allocate dev2
     # Dato real obtenido de un momento de control del proyecto.
     actual:effort 20d
-    # Como MODIFICACIÓN de la planificación inicial, el inicio de las pruebas de aceptación 
-    # debe ser, como pronto, el 15 de mayo de 2026.
+    # As a MODIFICATION of the initial plan, the mininum wanted start time of the acceptance 
+    # tests is 2026-05-15.
     minstart 2026-05-15
     # Frontend, Backend and Deployment must be finished before starting the acceptance tests
     # (version to submit).
