@@ -330,6 +330,7 @@ textreport frame "" {
     title "Contact List"
     center '<[report id="contactList"]>'
   }
+  
   textreport "ResourceGraph" {
     formats html
     title "Resource Graph"
