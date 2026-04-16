@@ -192,7 +192,7 @@ task WMGame "Web & Mobile Game" {
     task tFEtMob "Mobile Front End Test" {
       # We have to increase the duration of this task so that the acceptance tests can 
       # start minimun in 2026-05-15.
-      effort 80d
+      effort 70d
       allocate dev1
       depends WMGame.tmobF.tFEcMob
     }    
@@ -208,13 +208,13 @@ task WMGame "Web & Mobile Game" {
     # Subtask to evaluate and decide which Cloud solution we want to use for the deployment of the
     # project.
     task tDepEval "Deployment evaluation and decision"{
-      effort 1d
+      effort 5d
       allocate boss, dev1, dev2, dev3, dev4
     }
 
     # Subtask to deploy the projecto in the Cloud solution decided in the previous task.
     task tDepEx "Deployment execution" {
-      effort 2d
+      effort 10d
       allocate dev1, dev2, dev4
       # The backend has to be developed before being deployed.
       depends WMGame.tback
