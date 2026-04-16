@@ -189,7 +189,9 @@ task WMGame "Web & Mobile Game" {
       depends WMGame.tmobF.tGUIdMob
     }
     task tFEtMob "Mobile Front End Test" {
-      effort 50d
+      # We have to increase the duration of this task so that the acceptance tests can 
+      # start minimun in 2026-05-15.
+      effort 80d
       allocate dev1
       depends WMGame.tmobF.tFEcMob
     }    
